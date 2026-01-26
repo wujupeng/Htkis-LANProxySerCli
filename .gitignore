@@ -1,0 +1,7 @@
+build/
+env/
+third_party/
+*.exe
+*.obj
+*.user
+.vscode/
