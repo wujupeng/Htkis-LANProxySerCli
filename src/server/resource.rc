@@ -1,0 +1,7 @@
+#include "resource.h"
+
+// Application icon (shown in Explorer, taskbar, title bar)
+IDI_APP_ICON ICON "../../HtkisPro.ico"
+
+// Embedded PNG for runtime use (window icon via GLFW, tray icon)
+IDR_PNG_LOGO RCDATA "../../HtkisPro.png"

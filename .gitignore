@@ -1,15 +1,11 @@
 build/
-<<<<<<< HEAD
 env/
 third_party/
 *.exe
 *.obj
 *.user
 .vscode/
-=======
 .DS_Store
-.vscode/
-*.user
 *.swp
 *.o
 *.dylib
@@ -18,4 +14,8 @@ CMakeFiles/
 cmake_install.cmake
 Makefile
 users.txt
->>>>>>> 8d260dd7167b147a3ab95360cd19a3183772b52a
+*.pdb
+*.ilk
+*.lib
+*.exp
+*.dll

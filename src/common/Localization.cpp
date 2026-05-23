@@ -17,7 +17,7 @@ Localization::Localization() {
 
     // English
     m_translations[Language::EN] = std::unordered_map<std::string, std::string>();
-    m_translations[Language::EN]["APP_TITLE_SERVER"] = "Htkis-LANProxySerCli - Server";
+    m_translations[Language::EN]["APP_TITLE_SERVER"] = "HtkisPro";
     m_translations[Language::EN]["APP_TITLE_CLIENT"] = "Htkis-LANProxySerCli - Client";
     m_translations[Language::EN]["USER_MANAGEMENT"] = "User Management";
     m_translations[Language::EN]["USERNAME"] = "Username";
@@ -50,11 +50,21 @@ Localization::Localization() {
     m_translations[Language::EN]["STOP_SERVER"] = "Stop Server";
     m_translations[Language::EN]["SERVER_CONTROL_PANEL"] = "Server Control Panel";
     m_translations[Language::EN]["CLIENT_CONNECTION"] = "Client Connection";
-    m_translations[Language::EN]["CLIENT_HINT"] = "Configure your system or browser proxy to SOCKS5 127.0.0.1:";
+    m_translations[Language::EN]["CLIENT_HINT"] = "Configure your system or browser proxy to SOCKS5/HTTP 127.0.0.1:";
+    m_translations[Language::EN]["STATUS"] = "Status";
+    m_translations[Language::EN]["SERVICE_STATUS"] = "Service Status";
+    m_translations[Language::EN]["PROXY_CONFIG"] = "Proxy Configuration";
+    m_translations[Language::EN]["PROTOCOL_INFO"] = "Supported Protocols";
+    m_translations[Language::EN]["USAGE_HINT"] = "Configure your browser/app proxy to this server's IP and port with your username and password.";
+    m_translations[Language::EN]["LOG_PANEL"] = "Logs";
+    m_translations[Language::EN]["CLEAR"] = "Clear";
+    m_translations[Language::EN]["AUTO_SCROLL"] = "Auto";
+    m_translations[Language::EN]["SHOW_WINDOW"] = "Show HtkisPro";
+    m_translations[Language::EN]["EXIT"] = "Exit";
 
     // Simplified Chinese
     m_translations[Language::ZH_CN] = std::unordered_map<std::string, std::string>();
-    m_translations[Language::ZH_CN]["APP_TITLE_SERVER"] = "Htkis-LANProxySerCli - 服务端";
+    m_translations[Language::ZH_CN]["APP_TITLE_SERVER"] = "HtkisPro";
     m_translations[Language::ZH_CN]["APP_TITLE_CLIENT"] = "Htkis-LANProxySerCli - 客户端";
     m_translations[Language::ZH_CN]["USER_MANAGEMENT"] = "用户管理";
     m_translations[Language::ZH_CN]["USERNAME"] = "用户名";
@@ -87,7 +97,17 @@ Localization::Localization() {
     m_translations[Language::ZH_CN]["STOP_SERVER"] = "停止服务";
     m_translations[Language::ZH_CN]["SERVER_CONTROL_PANEL"] = "服务端控制面板";
     m_translations[Language::ZH_CN]["CLIENT_CONNECTION"] = "客户端连接";
-    m_translations[Language::ZH_CN]["CLIENT_HINT"] = "请配置您的系统或浏览器代理为 SOCKS5 127.0.0.1:";
+    m_translations[Language::ZH_CN]["CLIENT_HINT"] = "请配置您的系统或浏览器代理为 SOCKS5/HTTP 127.0.0.1:";
+    m_translations[Language::ZH_CN]["STATUS"] = "状态";
+    m_translations[Language::ZH_CN]["SERVICE_STATUS"] = "服务状态";
+    m_translations[Language::ZH_CN]["PROXY_CONFIG"] = "代理配置";
+    m_translations[Language::ZH_CN]["PROTOCOL_INFO"] = "支持协议";
+    m_translations[Language::ZH_CN]["USAGE_HINT"] = "在浏览器或应用中配置代理地址为本机IP和端口，并填写用户名和密码即可使用。";
+    m_translations[Language::ZH_CN]["LOG_PANEL"] = "日志";
+    m_translations[Language::ZH_CN]["CLEAR"] = "清空";
+    m_translations[Language::ZH_CN]["AUTO_SCROLL"] = "自动滚动";
+    m_translations[Language::ZH_CN]["SHOW_WINDOW"] = "显示主窗口";
+    m_translations[Language::ZH_CN]["EXIT"] = "退出";
 
     // Vietnamese
     m_translations[Language::VI] = std::unordered_map<std::string, std::string>();
@@ -124,7 +144,7 @@ Localization::Localization() {
     m_translations[Language::VI]["STOP_SERVER"] = "Dừng lại";
     m_translations[Language::VI]["SERVER_CONTROL_PANEL"] = "Bảng điều khiển máy chủ";
     m_translations[Language::VI]["CLIENT_CONNECTION"] = "Kết nối máy khách";
-    m_translations[Language::VI]["CLIENT_HINT"] = "Cấu hình proxy trình duyệt hoặc hệ thống của bạn thành SOCKS5 127.0.0.1:";
+    m_translations[Language::VI]["CLIENT_HINT"] = "Cấu hình proxy trình duyệt hoặc hệ thống của bạn thành SOCKS5/HTTP 127.0.0.1:";
     
     // Thai
     m_translations[Language::TH] = std::unordered_map<std::string, std::string>();
@@ -161,7 +181,7 @@ Localization::Localization() {
     m_translations[Language::TH]["STOP_SERVER"] = "หยุดเซิร์ฟเวอร์";
     m_translations[Language::TH]["SERVER_CONTROL_PANEL"] = "แผงควบคุมเซิร์ฟเวอร์";
     m_translations[Language::TH]["CLIENT_CONNECTION"] = "การเชื่อมต่อลูกค้า";
-    m_translations[Language::TH]["CLIENT_HINT"] = "กำหนดค่าพร็อกซีระบบหรือเบราว์เซอร์ของคุณเป็น SOCKS5 127.0.0.1:";
+    m_translations[Language::TH]["CLIENT_HINT"] = "กำหนดค่าพร็อกซีระบบหรือเบราว์เซอร์ของคุณเป็น SOCKS5/HTTP 127.0.0.1:";
 
     // Mexican Spanish
     m_translations[Language::ES_MX] = std::unordered_map<std::string, std::string>();
@@ -198,7 +218,7 @@ Localization::Localization() {
     m_translations[Language::ES_MX]["STOP_SERVER"] = "Detener servidor";
     m_translations[Language::ES_MX]["SERVER_CONTROL_PANEL"] = "Panel de control";
     m_translations[Language::ES_MX]["CLIENT_CONNECTION"] = "Conexión del cliente";
-    m_translations[Language::ES_MX]["CLIENT_HINT"] = "Configure su sistema o navegador proxy a SOCKS5 127.0.0.1:";
+    m_translations[Language::ES_MX]["CLIENT_HINT"] = "Configure su sistema o navegador proxy a SOCKS5/HTTP 127.0.0.1:";
     
     // Hungarian
     m_translations[Language::HU] = std::unordered_map<std::string, std::string>();
@@ -235,7 +255,7 @@ Localization::Localization() {
     m_translations[Language::HU]["STOP_SERVER"] = "Szerver leállítása";
     m_translations[Language::HU]["SERVER_CONTROL_PANEL"] = "Szerver vezérlőpult";
     m_translations[Language::HU]["CLIENT_CONNECTION"] = "Ügyfél kapcsolat";
-    m_translations[Language::HU]["CLIENT_HINT"] = "Állítsa be a rendszer vagy böngésző proxy-t SOCKS5 127.0.0.1:";
+    m_translations[Language::HU]["CLIENT_HINT"] = "Állítsa be a rendszer vagy böngésző proxy-t SOCKS5/HTTP 127.0.0.1:";
 }
 
 void Localization::setLanguage(Language lang) {
