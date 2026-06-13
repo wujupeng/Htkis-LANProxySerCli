@@ -1,6 +1,7 @@
 build/
 env/
 third_party/
+_deps/
 *.exe
 *.obj
 *.user
@@ -13,9 +14,43 @@ CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
 Makefile
-users.txt
 *.pdb
 *.ilk
 *.lib
 *.exp
 *.dll
+compile_commands.json
+
+node_modules/
+web_ui/dist/
+web_ui/node_modules/
+web/
+
+logs/
+data/*.mmdb
+data/users.json
+data/vmess_remarks.json
+
+config/system.json
+config/cert.pem
+config/key.pem
+config/default_system.json
+
+v2rayn/config.json
+v2rayn/*.dat
+v2rayn/v2ray
+
+imgui.ini
+
+# Sensitive scripts with embedded credentials
+*.py
+!scripts/__init__.py
+
+# IDE / tool cache
+.idea/
+.cache/
+.arts/
+.codeartsdoer/
+
+# Release packages
+release_pkg/

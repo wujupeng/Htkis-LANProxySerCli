@@ -1,0 +1,21 @@
+{
+    "proxy_port": 10800,
+    "web_ui_port": 8080,
+    "web_ui_https_enabled": false,
+    "default_route_action": "proxy",
+    "proxy_thread_count": 4,
+    "v2rayn_executable_path": "/opt/lan-proxy-gateway/v2rayn/v2ray",
+    "v2rayn_config_path": "/opt/lan-proxy-gateway/v2rayn/config.json",
+    "v2rayn_local_socks_port": 10808,
+    "v2rayn_local_http_port": 10809,
+    "admin_username": "admin",
+    "admin_password_hash": "",
+    "jwt_secret": "",
+    "log_file_path": "/opt/lan-proxy-gateway/logs/",
+    "user_data_path": "/opt/lan-proxy-gateway/data/users.json",
+    "geoip_db_path": "/opt/lan-proxy-gateway/data/GeoLite2-Country.mmdb",
+    "builtin_rules_path": "/opt/lan-proxy-gateway/data/builtin_rules.json",
+    "custom_rules_path": "/opt/lan-proxy-gateway/data/custom_rules.json",
+    "cert_path": "/opt/lan-proxy-gateway/config/cert.pem",
+    "key_path": "/opt/lan-proxy-gateway/config/key.pem"
+}

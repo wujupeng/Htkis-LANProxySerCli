@@ -1,0 +1,36 @@
+{
+    "rules": [
+        {"rule_id": "cn_suffix_1", "rule_type": "domain_suffix", "pattern": ".cn", "action": "direct", "priority": 100},
+        {"rule_id": "cn_suffix_2", "rule_type": "domain_suffix", "pattern": ".com.cn", "action": "direct", "priority": 101},
+        {"rule_id": "cn_suffix_3", "rule_type": "domain_suffix", "pattern": ".gov.cn", "action": "direct", "priority": 101},
+        {"rule_id": "cn_suffix_4", "rule_type": "domain_suffix", "pattern": ".edu.cn", "action": "direct", "priority": 101},
+        {"rule_id": "cn_suffix_5", "rule_type": "domain_suffix", "pattern": ".net.cn", "action": "direct", "priority": 101},
+        {"rule_id": "cn_suffix_6", "rule_type": "domain_suffix", "pattern": ".org.cn", "action": "direct", "priority": 101},
+        {"rule_id": "cn_exact_baidu", "rule_type": "domain_exact", "pattern": "baidu.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_taobao", "rule_type": "domain_exact", "pattern": "taobao.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_tmall", "rule_type": "domain_exact", "pattern": "tmall.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_qq", "rule_type": "domain_exact", "pattern": "qq.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_weixin", "rule_type": "domain_exact", "pattern": "weixin.qq.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_bilibili", "rule_type": "domain_exact", "pattern": "bilibili.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_jd", "rule_type": "domain_exact", "pattern": "jd.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_163", "rule_type": "domain_exact", "pattern": "163.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_alipay", "rule_type": "domain_exact", "pattern": "alipay.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_weibo", "rule_type": "domain_exact", "pattern": "weibo.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_zhihu", "rule_type": "domain_exact", "pattern": "zhihu.com", "action": "direct", "priority": 200},
+        {"rule_id": "cn_exact_douyin", "rule_type": "domain_exact", "pattern": "douyin.com", "action": "direct", "priority": 200},
+
+        {"rule_id": "intl_suffix_google", "rule_type": "domain_suffix", "pattern": ".google.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_youtube", "rule_type": "domain_suffix", "pattern": ".youtube.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_github", "rule_type": "domain_suffix", "pattern": ".github.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_githubusercontent", "rule_type": "domain_suffix", "pattern": ".githubusercontent.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_twitter", "rule_type": "domain_suffix", "pattern": ".twitter.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_x", "rule_type": "domain_suffix", "pattern": ".x.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_facebook", "rule_type": "domain_suffix", "pattern": ".facebook.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_instagram", "rule_type": "domain_suffix", "pattern": ".instagram.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_wikipedia", "rule_type": "domain_suffix", "pattern": ".wikipedia.org", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_reddit", "rule_type": "domain_suffix", "pattern": ".reddit.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_stackoverflow", "rule_type": "domain_suffix", "pattern": ".stackoverflow.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_openai", "rule_type": "domain_suffix", "pattern": ".openai.com", "action": "proxy", "priority": 100},
+        {"rule_id": "intl_suffix_claude", "rule_type": "domain_suffix", "pattern": ".claude.ai", "action": "proxy", "priority": 100}
+    ]
+}

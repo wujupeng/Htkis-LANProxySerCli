@@ -1,0 +1,26 @@
+[Unit]
+Description=LAN Proxy Gateway - Transparent Proxy with v2rayN Integration
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=debian
+Group=debian
+WorkingDirectory=/home/debian/LanProxySerCli
+ExecStart=/home/debian/LanProxySerCli/lan_proxy_gateway --config /home/debian/LanProxySerCli/config/system.json
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadWritePaths=/home/debian/LanProxySerCli/data /home/debian/LanProxySerCli/logs /home/debian/LanProxySerCli/config /home/debian/LanProxySerCli/v2rayn
+PrivateTmp=true
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=lan-proxy-gateway
+
+[Install]
+WantedBy=multi-user.target

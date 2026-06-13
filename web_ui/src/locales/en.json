@@ -1,0 +1,12 @@
+{
+  "app": { "title": "LAN Proxy Gateway" },
+  "nav": { "dashboard": "Dashboard", "users": "Users", "rules": "Rules", "v2rayn": "v2rayN", "settings": "Settings", "logs": "Logs" },
+  "login": { "title": "Admin Login", "username": "Username", "password": "Password", "submit": "Login", "locked": "Account locked, try again later" },
+  "dashboard": { "proxyStatus": "Proxy Status", "v2raynStatus": "v2rayN Status", "activeConns": "Active Connections", "totalConns": "Total Connections", "directTraffic": "Direct Traffic", "proxyTraffic": "Proxy Traffic", "recentLogs": "Recent Logs", "running": "Running", "stopped": "Stopped" },
+  "users": { "title": "User Management", "add": "Add User", "username": "Username", "password": "Password", "expireDays": "Expire Days", "active": "Active", "expired": "Expired", "actions": "Actions", "edit": "Edit", "delete": "Delete", "neverExpire": "Never Expire" },
+  "rules": { "title": "Routing Rules", "add": "Add Rule", "type": "Rule Type", "pattern": "Pattern", "action": "Action", "direct": "Direct", "proxy": "Proxy", "priority": "Priority", "enabled": "Enabled", "builtin": "Builtin", "custom": "Custom", "reload": "Reload" },
+  "v2rayn": { "title": "v2rayN Config", "status": "Status", "start": "Start", "stop": "Stop", "restart": "Restart", "config": "Config", "apply": "Apply", "validate": "Validate" },
+  "settings": { "title": "System Settings", "proxyPort": "Proxy Port", "webPort": "Web Port", "threadCount": "Thread Count", "defaultRoute": "Default Route", "needRestart": "Restart required to take effect" },
+  "logs": { "title": "Logs", "level": "Level", "all": "All", "info": "Info", "warn": "Warn", "error": "Error", "autoScroll": "Auto Scroll", "pause": "Pause" },
+  "common": { "save": "Save", "cancel": "Cancel", "confirm": "Confirm", "deleteConfirm": "Confirm delete?", "ok": "OK", "fail": "Failed" }
+}
