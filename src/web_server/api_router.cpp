@@ -2,6 +2,7 @@
 #include "web_server/auth_middleware.h"
 #include "web_server/jwt_util.h"
 #include "web_server/ws_handler.h"
+#include <fstream>
 
 #define AUTH_GUARD(req, res) if (!auth_check::require_auth(req, res)) return;
 #define ADMIN_GUARD(req, res) if (!auth_check::require_admin(req, res)) return;
@@ -1088,6 +1089,17 @@ void register_api_routes(crow::SimpleApp& app) {
         j["ban_duration_sec"] = cfg.ban_duration_sec;
         res.write(j.dump());
         res.end();
+    });
+
+    CROW_CATCHALL_ROUTE(app)
+    ([]() {
+        std::ifstream f("/home/debian/LanProxySerCli/web/index.html");
+        if (f) {
+            std::string content((std::istreambuf_iterator<char>(f)),
+                                 std::istreambuf_iterator<char>());
+            return crow::response(200, "text/html", content);
+        }
+        return crow::response(404, "Not Found");
     });
 
 }
