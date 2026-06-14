@@ -114,9 +114,10 @@ void session::close_session(const std::string& reason) {
     m_client_socket.close(ec);
     m_remote_socket.close(ec);
 
-    overload_protector::instance().dec_total_connections();
-
-    metrics_collector::instance().dec_active_connections();
+    if (m_admitted) {
+        overload_protector::instance().dec_total_connections();
+        metrics_collector::instance().dec_active_connections();
+    }
 
     if (m_tunnel_active && m_route_action == session_route_action::proxy && !m_selected_node_tag.empty()) {
         load_balancer::instance().dec_node_connections(m_selected_node_tag);

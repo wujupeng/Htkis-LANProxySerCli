@@ -1,7 +1,7 @@
 {
   "app": { "title": "LAN Proxy Gateway" },
   "nav": { "dashboard": "Dashboard", "users": "Users", "rules": "Rules", "v2rayn": "v2rayN", "settings": "Settings", "logs": "Logs" },
-  "login": { "title": "Admin Login", "username": "Username", "password": "Password", "submit": "Login", "locked": "Account locked, try again later" },
+  "login": { "title": "Admin Login", "username": "Username", "password": "Password", "submit": "Login", "locked": "Account locked, try again later", "adminOnly": "Admin access only" },
   "dashboard": { "proxyStatus": "Proxy Status", "v2raynStatus": "v2rayN Status", "activeConns": "Active Connections", "totalConns": "Total Connections", "directTraffic": "Direct Traffic", "proxyTraffic": "Proxy Traffic", "recentLogs": "Recent Logs", "running": "Running", "stopped": "Stopped" },
   "users": { "title": "User Management", "add": "Add User", "username": "Username", "password": "Password", "expireDays": "Expire Days", "active": "Active", "expired": "Expired", "actions": "Actions", "edit": "Edit", "delete": "Delete", "neverExpire": "Never Expire" },
   "rules": { "title": "Routing Rules", "add": "Add Rule", "type": "Rule Type", "pattern": "Pattern", "action": "Action", "direct": "Direct", "proxy": "Proxy", "priority": "Priority", "enabled": "Enabled", "builtin": "Builtin", "custom": "Custom", "reload": "Reload" },

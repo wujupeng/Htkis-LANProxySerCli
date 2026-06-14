@@ -1,7 +1,7 @@
 {
   "app": { "title": "LAN代理网关" },
   "nav": { "dashboard": "仪表盘", "users": "用户管理", "rules": "分流规则", "v2rayn": "v2rayN配置", "settings": "系统设置", "logs": "日志查看" },
-  "login": { "title": "管理员登录", "username": "用户名", "password": "密码", "submit": "登录", "locked": "账户已锁定，请稍后重试" },
+  "login": { "title": "管理员登录", "username": "用户名", "password": "密码", "submit": "登录", "locked": "账户已锁定，请稍后重试", "adminOnly": "仅管理员可登录管理后台" },
   "dashboard": { "proxyStatus": "代理服务状态", "v2raynStatus": "v2rayN状态", "activeConns": "活跃连接", "totalConns": "总连接数", "directTraffic": "国内流量", "proxyTraffic": "国际流量", "recentLogs": "最近日志", "running": "运行中", "stopped": "已停止" },
   "users": { "title": "用户管理", "add": "添加用户", "username": "用户名", "password": "密码", "expireDays": "有效天数", "active": "启用", "expired": "已过期", "actions": "操作", "edit": "编辑", "delete": "删除", "neverExpire": "永不过期" },
   "rules": { "title": "分流规则", "add": "添加规则", "type": "规则类型", "pattern": "匹配模式", "action": "动作", "direct": "直连", "proxy": "走代理", "priority": "优先级", "enabled": "启用", "builtin": "内置", "custom": "自定义", "reload": "热加载" },

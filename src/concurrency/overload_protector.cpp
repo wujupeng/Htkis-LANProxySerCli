@@ -103,6 +103,13 @@ int overload_protector::get_user_connections(const std::string& username) const 
 
 int overload_protector::get_total_connections() const { return m_total_connections.load(); }
 void overload_protector::inc_total_connections() { m_total_connections.fetch_add(1); }
-void overload_protector::dec_total_connections() { m_total_connections.fetch_sub(1); }
+void overload_protector::dec_total_connections() {
+    int current = m_total_connections.load();
+    while (current > 0) {
+        if (m_total_connections.compare_exchange_weak(current, current - 1)) {
+            break;
+        }
+    }
+}
 
 overload_status overload_protector::get_status() const { return check(); }

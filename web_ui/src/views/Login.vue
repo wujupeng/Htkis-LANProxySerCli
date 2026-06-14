@@ -31,7 +31,13 @@ async function handleLogin() {
   loading.value = true
   try {
     const { data } = await request.post('/api/auth/login', form)
+    if (data.role !== 'admin') {
+      ElMessage.error(t('login.adminOnly'))
+      loading.value = false
+      return
+    }
     localStorage.setItem('token', data.token)
+    localStorage.setItem('role', data.role)
     ElMessage.success(t('common.ok'))
     router.push('/dashboard')
   } catch (e: any) {
