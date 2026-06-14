@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="showAdd = true" style="margin-bottom:16px">{{ $t('users.add') }}</el-button>
+    <el-button type="primary" @click="openAdd" style="margin-bottom:16px">{{ $t('users.add') }}</el-button>
     <el-table :data="users" stripe>
       <el-table-column prop="username" :label="$t('users.username')" />
       <el-table-column :label="$t('users.expireDays')">
@@ -23,15 +23,15 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog v-model="showAdd" :title="$t('users.add')">
+    <el-dialog v-model="showAdd" :title="isEdit ? $t('users.edit') : $t('users.add')">
       <el-form :model="form">
-        <el-form-item :label="$t('users.username')"><el-input v-model="form.username" /></el-form-item>
+        <el-form-item :label="$t('users.username')"><el-input v-model="form.username" :disabled="isEdit" /></el-form-item>
         <el-form-item :label="$t('users.password')"><el-input v-model="form.password" type="password" /></el-form-item>
         <el-form-item :label="$t('users.expireDays')"><el-input-number v-model="form.days" :min="0" /></el-form-item>
       </el-form>
       <template #footer>
         <el-button @click="showAdd = false">{{ $t('common.cancel') }}</el-button>
-        <el-button type="primary" @click="addUser">{{ $t('common.save') }}</el-button>
+        <el-button type="primary" @click="isEdit ? saveEdit() : addUser()">{{ $t('common.save') }}</el-button>
       </template>
     </el-dialog>
   </div>
@@ -44,6 +44,7 @@ import request from '../utils/request'
 
 const users = ref<any[]>([])
 const showAdd = ref(false)
+const isEdit = ref(false)
 const form = reactive({ username: '', password: '', days: 0 })
 
 async function fetchUsers() {
@@ -60,6 +61,17 @@ async function addUser() {
   } catch {}
 }
 
+async function saveEdit() {
+  try {
+    const payload: any = {}
+    if (form.password) payload.password = form.password
+    await request.put(`/api/users/${form.username}`, payload)
+    ElMessage.success('OK')
+    showAdd.value = false
+    fetchUsers()
+  } catch {}
+}
+
 async function deleteUser(username: string) {
   await request.delete(`/api/users/${username}`)
   fetchUsers()
@@ -70,7 +82,16 @@ async function toggleActive(username: string, active: boolean) {
 }
 
 function editUser(row: any) {
+  isEdit.value = true
   form.username = row.username
+  form.password = ''
+  form.days = 0
+  showAdd.value = true
+}
+
+function openAdd() {
+  isEdit.value = false
+  form.username = ''
   form.password = ''
   form.days = 0
   showAdd.value = true
