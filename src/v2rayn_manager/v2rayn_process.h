@@ -22,6 +22,14 @@ public:
 
     void set_on_exit(std::function<void(int)> cb);
 
+    bool check_child_exit() {
+        if (m_child_exited.exchange(false)) {
+            on_child_exit();
+            return true;
+        }
+        return false;
+    }
+
 private:
     v2rayn_process() = default;
 
@@ -33,6 +41,7 @@ private:
     std::atomic<v2rayn_status> m_status{v2rayn_status::stopped};
     std::atomic<int> m_pid{0};
     std::atomic<int> m_crash_count{0};
+    std::atomic<bool> m_child_exited{false};
     std::chrono::steady_clock::time_point m_crash_window_start;
     std::string m_exec_path;
     std::string m_config_path;

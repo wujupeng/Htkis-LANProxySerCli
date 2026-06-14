@@ -64,11 +64,7 @@ bool v2rayn_process::do_start() {
 
     struct child_watcher {
         static void handler(int sig) {
-            int status;
-            pid_t p = waitpid(-1, &status, WNOHANG);
-            if (p > 0) {
-                v2rayn_process::instance().on_child_exit();
-            }
+            v2rayn_process::instance().m_child_exited.store(true);
         }
     };
     struct sigaction sa{};
@@ -119,7 +115,23 @@ bool v2rayn_process::restart() {
 }
 
 void v2rayn_process::on_child_exit() {
-    if (m_stopping) return;
+    std::lock_guard<std::mutex> lock(m_mutex);
+
+    int status;
+    pid_t p = waitpid(-1, &status, WNOHANG);
+    if (p <= 0) return;
+
+    m_child_exited.store(false);
+
+    if (m_stopping) {
+        m_pid = 0;
+        return;
+    }
+
+    if (m_status != v2rayn_status::running) {
+        m_pid = 0;
+        return;
+    }
 
     m_pid = 0;
     m_crash_count++;

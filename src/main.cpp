@@ -161,7 +161,8 @@ int main(int argc, char* argv[]) {
     logger.info("main", "v2rayN SOCKS5 port: " + std::to_string(cfg.v2rayn_local_socks_port));
 
     while (g_running) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        v2rayn_process::instance().check_child_exit();
     }
 
     logger.info("main", "Shutting down...");
