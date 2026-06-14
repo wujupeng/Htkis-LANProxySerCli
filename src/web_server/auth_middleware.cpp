@@ -48,3 +48,17 @@ bool auth_check::require_auth(const crow::request& req, crow::response& res) {
     }
     return true;
 }
+
+bool auth_check::require_admin(const crow::request& req, crow::response& res) {
+    if (!require_auth(req, res)) return false;
+
+    std::string token = extract_token(req);
+    std::string role = jwt_util::get_role(token);
+    if (role != "admin") {
+        res.code = 403;
+        res.write("{\"error\":\"admin_required\"}");
+        res.end();
+        return false;
+    }
+    return true;
+}

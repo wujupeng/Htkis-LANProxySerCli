@@ -110,8 +110,7 @@ target_include_directories(lan_proxy_gateway PRIVATE
 target_compile_definitions(lan_proxy_gateway PRIVATE
     ASIO_STANDALONE
     SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_INFO
-    CROW_DISABLE_STATIC_DIR
-    CROW_STATIC_DIRECTORY="/opt/lan-proxy-gateway/web/"
+    CROW_STATIC_DIRECTORY="/home/debian/LanProxySerCli/web/"
 )
 
 target_link_libraries(lan_proxy_gateway PRIVATE

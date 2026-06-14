@@ -53,6 +53,7 @@ public:
     int get_user_connections(const std::string& username) const;
     int get_active_connections() const;
     int get_queued_count() const;
+    int get_max_connections() const;
 
     void set_max_connections(int max);
     void set_max_connections_per_user(int max);

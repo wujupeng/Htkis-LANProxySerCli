@@ -90,7 +90,12 @@ admit_response connection_admitter::request_admit(const std::string& session_id,
 }
 
 void connection_admitter::release_connection(const std::string& username) {
-    m_active_connections.fetch_sub(1);
+    int current = m_active_connections.load();
+    while (current > 0) {
+        if (m_active_connections.compare_exchange_weak(current, current - 1)) {
+            break;
+        }
+    }
     {
         std::unique_lock lock(m_user_mutex);
         auto it = m_user_connections.find(username);
@@ -157,6 +162,10 @@ int connection_admitter::get_user_connections(const std::string& username) const
 
 int connection_admitter::get_active_connections() const {
     return m_active_connections.load();
+}
+
+int connection_admitter::get_max_connections() const {
+    return m_max_connections.load();
 }
 
 int connection_admitter::get_queued_count() const {

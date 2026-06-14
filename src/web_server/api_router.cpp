@@ -4,6 +4,7 @@
 #include "web_server/ws_handler.h"
 
 #define AUTH_GUARD(req, res) if (!auth_check::require_auth(req, res)) return;
+#define ADMIN_GUARD(req, res) if (!auth_check::require_admin(req, res)) return;
 #include "config_manager/config_loader.h"
 #include "user_manager/user_manager.h"
 #include "user_manager/password_hasher.h"
@@ -96,12 +97,13 @@ void register_api_routes(crow::SimpleApp& app) {
                 g_login_fail_count.erase(username);
                 g_login_lock_until.erase(username);
 
-                std::string token = jwt_util::sign(username);
+                std::string token = jwt_util::sign(username, "admin");
                 audit_logger::instance().log(username, "login", "system");
 
                 nlohmann::json resp;
                 resp["token"] = token;
                 resp["username"] = username;
+                resp["role"] = "admin";
                 return crow::response(resp.dump());
             }
 
@@ -120,12 +122,13 @@ void register_api_routes(crow::SimpleApp& app) {
                 g_login_fail_count.erase(username);
                 g_login_lock_until.erase(username);
 
-                std::string token = jwt_util::sign(username);
+                std::string token = jwt_util::sign(username, "user");
                 audit_logger::instance().log(username, "login", "user");
 
                 nlohmann::json resp;
                 resp["token"] = token;
                 resp["username"] = username;
+                resp["role"] = "user";
                 return crow::response(resp.dump());
             }
 
@@ -205,7 +208,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/users").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             std::string username = body.value("username", "");
@@ -233,7 +236,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/users/<string>").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res, const std::string& username) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             if (body.contains("active")) {
@@ -255,7 +258,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/users/<string>").methods("DELETE"_method)
     ([](const crow::request& req, crow::response& res, const std::string& username) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         if (user_manager::instance().remove_user(username)) {
             user_manager::instance().save();
             audit_logger::instance().log("admin", "delete_user", username);
@@ -290,7 +293,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/rules").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             route_rule rule;
@@ -314,7 +317,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/rules/reload").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         route_engine::instance().reload_rules();
         res.write("{\"ok\":true}");
         res.end();
@@ -336,7 +339,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/start").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         auto& cfg = config_loader::instance().config();
         v2rayn_process::instance().start(
             cfg.v2rayn_executable_path, cfg.v2rayn_config_path,
@@ -347,7 +350,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/stop").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         v2rayn_process::instance().stop();
         res.write("{\"ok\":true}");
         res.end();
@@ -355,7 +358,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/restart").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         v2rayn_process::instance().restart();
         res.write("{\"ok\":true}");
         res.end();
@@ -373,7 +376,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/config").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto config = nlohmann::json::parse(req.body);
             if (!v2rayn_config::validate(config)) {
@@ -417,7 +420,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/settings").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             auto& cfg = config_loader::instance().config();
@@ -541,7 +544,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/nodes").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             auto& mgr = vm_node_manager::instance();
@@ -567,7 +570,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/nodes/<string>").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res, const std::string& old_tag) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             auto& mgr = vm_node_manager::instance();
@@ -590,7 +593,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/nodes/<string>").methods("DELETE"_method)
     ([](const crow::request& req, crow::response& res, const std::string& tag) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         auto& mgr = vm_node_manager::instance();
         std::string error_msg;
         if (mgr.remove_node(tag, error_msg)) {
@@ -605,7 +608,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/nodes/reorder").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             std::vector<std::string> tags;
@@ -624,7 +627,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/apply").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         auto& mgr = vm_node_manager::instance();
         std::string error_msg;
 
@@ -666,7 +669,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/active").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             std::string node_tag = body.value("node_tag", "");
@@ -736,7 +739,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/import").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             std::string link = body.value("vmess_link", "");
@@ -769,7 +772,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/v2rayn/vmess/export/<string>").methods("POST"_method)
     ([](const crow::request& req, crow::response& res, const std::string& tag) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         auto& mgr = vm_node_manager::instance();
         auto node = mgr.get_node(tag);
         if (!node.has_value()) {
@@ -794,7 +797,7 @@ void register_api_routes(crow::SimpleApp& app) {
         j["active_connections"] = stats.active_connections;
         j["total_connections"] = stats.total_connections;
         j["queued_connections"] = stats.queued_connections;
-        j["max_connections"] = connection_admitter::instance().get_active_connections();
+        j["max_connections"] = stats.max_connections;
         j["is_overloaded"] = stats.is_overloaded;
         res.write(j.dump());
         res.end();
@@ -906,7 +909,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/concurrency/schedule").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             if (!body.contains("strategy")) {
@@ -928,7 +931,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/concurrency/ip-affinity").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             if (body.contains("enabled")) {
@@ -945,7 +948,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/concurrency/node-weight/<string>").methods("PUT"_method)
     ([](const crow::request& req, crow::response& res, const std::string& tag) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         try {
             auto body = nlohmann::json::parse(req.body);
             if (!body.contains("weight")) {
@@ -994,7 +997,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_ROUTE(app, "/api/concurrency/health/check").methods("POST"_method)
     ([](const crow::request& req, crow::response& res) {
-        AUTH_GUARD(req, res);
+        ADMIN_GUARD(req, res);
         auto nodes = vm_node_manager::instance().list_nodes(false);
         for (const auto& n : nodes) {
             node_health_checker::instance().check_now(n.tag);

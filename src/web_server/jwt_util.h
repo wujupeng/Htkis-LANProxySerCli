@@ -7,9 +7,10 @@
 class jwt_util {
 public:
     static void set_secret(const std::string& secret);
-    static std::string sign(const std::string& username, int expire_minutes = 30);
+    static std::string sign(const std::string& username, const std::string& role = "user", int expire_minutes = 30);
     static bool verify(const std::string& token);
     static std::string get_username(const std::string& token);
+    static std::string get_role(const std::string& token);
 
 private:
     static std::string m_secret;

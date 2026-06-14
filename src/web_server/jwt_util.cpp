@@ -71,13 +71,14 @@ std::string jwt_util::hmac_sha256(const std::string& data, const std::string& ke
     return std::string(reinterpret_cast<char*>(result), result_len);
 }
 
-std::string jwt_util::sign(const std::string& username, int expire_minutes) {
+std::string jwt_util::sign(const std::string& username, const std::string& role, int expire_minutes) {
     nlohmann::json header;
     header["alg"] = "HS256";
     header["typ"] = "JWT";
 
     nlohmann::json payload;
     payload["username"] = username;
+    payload["role"] = role;
     payload["exp"] = std::chrono::duration_cast<std::chrono::seconds>(
         std::chrono::system_clock::now().time_since_epoch()).count() + expire_minutes * 60;
 
@@ -146,5 +147,22 @@ std::string jwt_util::get_username(const std::string& token) {
         return payload.value("username", "");
     } catch (...) {
         return "";
+    }
+}
+
+std::string jwt_util::get_role(const std::string& token) {
+    if (!verify(token)) return "";
+
+    auto dot1 = token.find('.');
+    auto dot2 = token.find('.', dot1 + 1);
+    if (dot1 == std::string::npos || dot2 == std::string::npos) return "user";
+
+    try {
+        std::string payload_b64 = token.substr(dot1 + 1, dot2 - dot1 - 1);
+        std::string payload_json = base64_decode(payload_b64);
+        auto payload = nlohmann::json::parse(payload_json);
+        return payload.value("role", "user");
+    } catch (...) {
+        return "user";
     }
 }

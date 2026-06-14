@@ -64,7 +64,12 @@ void concurrency_metrics::dec_user_connections(const std::string& username) {
     if (it != m_user_metrics.end() && it->second.active_connections > 0) {
         it->second.active_connections--;
     }
-    m_active_connections.fetch_sub(1);
+    int current = m_active_connections.load();
+    while (current > 0) {
+        if (m_active_connections.compare_exchange_weak(current, current - 1)) {
+            break;
+        }
+    }
 }
 
 void concurrency_metrics::add_user_bytes(const std::string& username, uint64_t up, uint64_t down) {
@@ -106,6 +111,7 @@ global_stats concurrency_metrics::get_global_stats() const {
     stats.active_connections = m_active_connections.load();
     stats.total_connections = m_total_connections.load();
     stats.queued_connections = m_queued_connections.load();
+    stats.max_connections = connection_admitter::instance().get_max_connections();
     stats.is_overloaded = overload_protector::instance().is_overloaded();
     return stats;
 }
