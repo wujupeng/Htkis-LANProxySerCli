@@ -107,10 +107,12 @@ target_include_directories(lan_proxy_gateway PRIVATE
     ${MAXMINDDB_INCLUDE_DIRS}
 )
 
+set(INSTALL_BASE "/home/debian/LanProxySerCli" CACHE PATH "Installation base directory")
+
 target_compile_definitions(lan_proxy_gateway PRIVATE
     ASIO_STANDALONE
     SPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_INFO
-    CROW_STATIC_DIRECTORY="/home/debian/LanProxySerCli/web/"
+    CROW_STATIC_DIRECTORY="${INSTALL_BASE}/web/"
 )
 
 target_link_libraries(lan_proxy_gateway PRIVATE

@@ -1093,7 +1093,7 @@ void register_api_routes(crow::SimpleApp& app) {
 
     CROW_CATCHALL_ROUTE(app)
     ([]() {
-        std::ifstream f("/home/debian/LanProxySerCli/web/index.html");
+        std::ifstream f(CROW_STATIC_DIRECTORY "index.html");
         if (f) {
             std::string content((std::istreambuf_iterator<char>(f)),
                                  std::istreambuf_iterator<char>());
